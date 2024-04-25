@@ -4,7 +4,6 @@
 # input. e.g. P should count the same as p, but be output as P. Non-alphabetic characters should be ignored and not
 # included in the output string.
 # Examples:
-#  “VirginiaTech” would be output as “aceghiiinrTV”
 #  “3 Blind Mice” would be output as “BcdeiilMn"
 
 # Time Complexity: n + c => O(n)
