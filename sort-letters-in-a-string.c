@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
+#include <sys/time.h>
 
 // Work Sample Exercise: Alphabetizer
 // Write a program that can read in a series of strings and output the strings with the characters in alphabetical order.
@@ -10,21 +11,10 @@
 // Examples:
 //  “3 Blind Mice” would be output as “BcdeiilMn"
 
-// Time Complexity: n => O(n)
-// Space Complexity: n => O(n)
+// Time Complexity: n + c => O(n)
+// Space Complexity: n + 52 => O(n)
 
-int main() {
-	// Dynamically read in a string from the user
-	int length = 0;
-	char* string = malloc(1*sizeof(char));
-	char c;
-
-	while ((c = getchar()) != EOF && c != '\n') {
-		string[length++] = c;
-		string = realloc(string, (length + 1) * sizeof(char));
-	}
-	string[length] = '\0';
-
+void sortDictionary(char* string, int length) {
 	// Create a dictionary to store the count of each letter (both upper and lower case)
 	int letterCount[52] = {0};
 
@@ -53,8 +43,39 @@ int main() {
 	}
 	putchar('\n');
 
-	// printf("%s\n", string);
+	return;
+}
+
+int main() {
+	// Dynamically read in a string from the user
+	int length = 0;
+	char* string = malloc(1*sizeof(char));
+	char c;
+
+	printf("Enter a string: ");
+
+	while ((c = getchar()) != EOF && c != '\n') {
+		string[length++] = c;
+		string = realloc(string, (length + 1) * sizeof(char));
+	}
+	string[length] = '\0';
+
+	// Measure the start time
+	struct timeval start_time;
+	gettimeofday(&start_time, NULL);
+
+	sortDictionary(string, length);
+
+	// Measure the end time
+	struct timeval end_time;
+	gettimeofday(&end_time, NULL);
+
+	// Calculate the execution time in microseconds
+	double execution_time = (end_time.tv_sec - start_time.tv_sec) * 1e6 + (end_time.tv_usec - start_time.tv_usec);
+	printf("Execution time: %d microseconds\n", (int)execution_time);
 
 	// Free the memory allocated for the string
 	free(string);
+	
+	return 0;
 }
